@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td><a href="/phonebook2/pbc?action=upForm&id=<%= personList.get(i).getPerson_id()%>">[수정]</a></td>
-			<td><a href="/phonebook2/pbc?action=deform&id=<%= personList.get(i).getPerson_id()%>">[삭제]</a></td>
+			<td><a href="/phonebook2/pbc?action=delete&id=<%= personList.get(i).getPerson_id()%>">[삭제]</a></td>
 		</tr>
 		
 	</table>

@@ -122,18 +122,25 @@ public class PhoneController extends HttpServlet {
 			//jsp에 포워드 (서블릿에서jsp파일에 포워드) , getRequestDispatcher("포워드 경로");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp"); //.이 들어가 있었음... ㅜㅜ
 			rd.forward(request, response);
+	
 			
+		}else if("delete".equals(action)) {
+			
+			System.out.println("정보 삭제");
+			
+			int pId = Integer.parseInt(request.getParameter("id")); //id값을 잘못줌..ㅜㅜ
+			
+			PhoneDao phoneDao = new PhoneDao();
+			phoneDao.personDelete(pId); //삭제
+			
+			// 사이사이 중복되는 코드값들은 바깥으로 뺄수 있을것 같음..dao ,vo
+			
+			response.sendRedirect("/phonebook2/pbc?action=list");
 			
 			
 			
 		}//if
-		
-		
-		
-		//등록폼
-		//action = wform --> 등록폼
-		
-		
+				
 		
 	}
 
