@@ -30,13 +30,13 @@
 		핸드폰(hp) : <input type="text" name="hp" value="<%=personVo.getHp() %>"> <br>
 		회사(company) : <input type="text" name="company" value="<%=personVo.getCompany()%>"> <br>
 		
-		 <input type="hidden" name="id" value="<%=personVo.getPerson_id()%>"> <br>
-		 <input type="hidden" name="action" value="update"> <br>
+		 <input type="hidden" name="id" value="<%=personVo.getPerson_id()%>">
+		 <input type="hidden" name="action" value="update"> 
 	<button type="submit" >수정</button>
 		
 	</form>
 	
-	<br><br><br>
+	<br>
 	<a href="./list.jsp">리스트 바로가기</a>
 
 </body>

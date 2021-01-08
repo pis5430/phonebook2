@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.PhoneDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.PersonVo;
 
 //리다이렉트 코드랑 포워드 정리하기
@@ -34,33 +35,17 @@ public class PhoneController extends HttpServlet {
 		String action = request.getParameter("action");
 		System.out.println(action); //null 값으로 나옴
 		
-		if("list".equals(action)) {
-
-			//action = list --> 리스트 출력 관련
-			
-			//리스트 출력 관련
-			
-			//리스트 출력 처리
-			PhoneDao phoneDao = new PhoneDao();
-			List<PersonVo> personList =	phoneDao.getPersonList();
-			
-			//System.out.println(personList.toString());  테스트용
-			
-			//html --> 엄청복잡 -->jsp에서 작업하는게 편함 (작업할 list.jsp 생성)
-			
-			//데이터 전달
-			request.setAttribute("pList", personList); //request.setAttribute("별명", 실제이름);
-			
-			//jsp에 포워드 시킨다.
-			RequestDispatcher rd = request.getRequestDispatcher("./WEB-INF/list.jsp"); //request.getRequestDispatcher(jsp파일 위치 )
-			rd.forward(request, response);
-
-		}else if("wform".equals(action)) {
+		
+		if("wform".equals(action)) {
 			System.out.println("등록폼 처리");
-			
-			
+
+			/*
 			RequestDispatcher rd = request.getRequestDispatcher("./WEB-INF/writeForm.jsp"); //포워드함
 			rd.forward(request, response);
+			*/
+			
+			//포워드를 유틸에 넣어서 포워드 메소드로 이용하기
+			WebUtil.forward(request, response, "./WEB-INF/writeForm.jsp");
 			
 			
 		}else if("insert".equals(action)) { //등록
@@ -81,8 +66,14 @@ public class PhoneController extends HttpServlet {
 			//dao personInsert() 에 저장 			
 			phoneDao.personInsert(personVo);
 			
+			
+			/*
 			//다시 list.jsp 화면이 보이게 만들어줘야함 , 리다이렉트코드
 			response.sendRedirect("/phonebook2/pbc?action=list");
+			*/
+			
+			WebUtil.rdirecte(request, response, "/phonebook2/pbc");
+			
 			
 		}else if("update".equals(action)) {
 			System.out.println("정보 수정");
@@ -103,7 +94,7 @@ public class PhoneController extends HttpServlet {
 			//dao personUpdate() 로 수정	
 			phoneDao.personUpdate(personVo);
 			
-			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.rdirecte(request, response, "/phonebook2/pbc");// WebUtil사용
 			
 			
 		}else if("upForm".equals(action)) {
@@ -118,11 +109,10 @@ public class PhoneController extends HttpServlet {
 			   
 			//id 데이터값을 전달 --> updateForm에서 request.getAttribute("personId");
 			request.setAttribute("pVo", personVo);
-			   
-			//jsp에 포워드 (서블릿에서jsp파일에 포워드) , getRequestDispatcher("포워드 경로");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp"); //.이 들어가 있었음... ㅜㅜ
-			rd.forward(request, response);
-	
+			
+			//포워드를 유틸에 넣어서 포워드 메소드로 이용하기
+			WebUtil.forward(request, response, "/WEB-INF/updateForm.jsp");
+			
 			
 		}else if("delete".equals(action)) {
 			
@@ -135,11 +125,36 @@ public class PhoneController extends HttpServlet {
 			
 			// 사이사이 중복되는 코드값들은 바깥으로 뺄수 있을것 같음..dao ,vo
 			
-			response.sendRedirect("/phonebook2/pbc?action=list");
+			response.sendRedirect("/phonebook2/pbc");
+	
+		}else { //기본값을 리스트로 설정
+			
+			//action = list --> 리스트 출력 관련
+			
+			//리스트 출력 관련
+			
+			//리스트 출력 처리
+			PhoneDao phoneDao = new PhoneDao();
+			List<PersonVo> personList =	phoneDao.getPersonList();
+			
+			//System.out.println(personList.toString());  테스트용
+			
+			//html --> 엄청복잡 -->jsp에서 작업하는게 편함 (작업할 list.jsp 생성)
+			
+			//데이터 전달
+			request.setAttribute("pList", personList); //request.setAttribute("별명", 실제이름);
+			
+			/*
+			//jsp에 포워드 시킨다.
+			RequestDispatcher rd = request.getRequestDispatcher("./WEB-INF/list.jsp"); //request.getRequestDispatcher(jsp파일 위치 )
+			rd.forward(request, response);
+			 */
+			
+			//포워드를 유틸에 넣어서 포워드 메소드로 이용하기
+			WebUtil.forward(request, response, "./WEB-INF/list.jsp");
 			
 			
-			
-		}//if
+		}
 				
 		
 	}
