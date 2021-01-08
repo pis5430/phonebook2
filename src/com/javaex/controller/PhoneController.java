@@ -84,6 +84,48 @@ public class PhoneController extends HttpServlet {
 			//다시 list.jsp 화면이 보이게 만들어줘야함 , 리다이렉트코드
 			response.sendRedirect("/phonebook2/pbc?action=list");
 			
+		}else if("update".equals(action)) {
+			System.out.println("정보 수정");
+			
+			//파라미터 4개값 꺼내기 
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
+			int personId = Integer.parseInt(request.getParameter("id"));
+			
+			//personVo 묶고			
+			PersonVo personVo = new PersonVo(personId, name, hp, company);
+			System.out.println(personVo);
+			
+			//new dao 만들고	
+			PhoneDao phoneDao = new PhoneDao();
+			
+			//dao personUpdate() 로 수정	
+			phoneDao.personUpdate(personVo);
+			
+			response.sendRedirect("/phonebook2/pbc?action=list");
+			
+			
+		}else if("upForm".equals(action)) {
+			
+			System.out.println("수정폼");
+			
+			int pId = Integer.parseInt(request.getParameter("id")); //id값을 잘못줌..ㅜㅜ
+			
+			//한명만 불러와야함 getPerson (수정폼에 들어가잇을 정보 불러오기 )
+			PhoneDao phoneDao = new PhoneDao();
+			PersonVo personVo = phoneDao.getPerson(pId);
+			   
+			//id 데이터값을 전달 --> updateForm에서 request.getAttribute("personId");
+			request.setAttribute("pVo", personVo);
+			   
+			//jsp에 포워드 (서블릿에서jsp파일에 포워드) , getRequestDispatcher("포워드 경로");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/updateForm.jsp"); //.이 들어가 있었음... ㅜㅜ
+			rd.forward(request, response);
+			
+			
+			
+			
 		}//if
 		
 		
@@ -97,7 +139,7 @@ public class PhoneController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doGet(request, response);
+		//doGet(request, response); 이렇게 열어두면 doGet으로 감
 	}
 
 }

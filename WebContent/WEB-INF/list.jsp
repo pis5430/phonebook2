@@ -19,7 +19,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>phonebook 모겔2</title>
+<title>phonebook 모델2</title>
 </head>
 <body>
 
@@ -32,8 +32,8 @@
 	<%for(int i = 0; i<personList.size(); i++){ %>
 	<table border="1">
 		<tr>
-			<td>이름 (name)</td>
-			<td><%=personList.get(i).getName() %></td>
+			<td>이름 (name) , id </td>
+			<td><%=personList.get(i).getName() %>,<%=personList.get(i).getPerson_id()%></td>
 		</tr>
 		<tr>
 			<td>핸드폰(hp)</td>
@@ -43,6 +43,10 @@
 			<td>회사(company)</td>
 			<td><%=personList.get(i).getCompany() %></td>
 		</tr>
+		<tr>
+			<td><a href="/phonebook2/pbc?action=upForm&id=<%= personList.get(i).getPerson_id()%>">[수정]</a></td>
+			<td><a href="/phonebook2/pbc?action=deform&id=<%= personList.get(i).getPerson_id()%>">[삭제]</a></td>
+		</tr>
 		
 	</table>
 	<br>
@@ -50,7 +54,7 @@
 	
 	<br>
 	
-	<a href="#">추가번호 등록</a>
+	<a href="/phonebook2/pbc?action=wform">추가번호 등록</a>
 
 
 </body>

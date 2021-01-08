@@ -179,10 +179,10 @@ public class PhoneDao {
 			query += " set   name = ?, ";
 			query += "       hp = ?, ";
 			query += "       company = ? ";
-			query += " from person ";
 			query += " where person_id = ? ";
+			//중간에 from절이 들어가 있었음... 그래서 update문이 제대로 안돌아감
 			
-			//System.out.println(query);
+			System.out.println(query);
 			
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, personVo.getName());
