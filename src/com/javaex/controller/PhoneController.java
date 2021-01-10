@@ -161,7 +161,7 @@ public class PhoneController extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doGet(request, response); 이렇게 열어두면 doGet으로 감
+		doGet(request, response); // 이렇게 열어두면 doGet으로 감
 	}
 
 }
